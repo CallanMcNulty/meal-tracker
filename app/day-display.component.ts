@@ -11,11 +11,15 @@ import { Day } from './day.model';
     <div>
       <h4>{{day.date.toDateString()}}</h4>
       <meal-list
-        [meals]='day.meals'>
+        [meals]='day.meals'
+        (onMealSelect)='removeMeal($event)'>
       </meal-list>
     </div>
     `
 })
 export class DayDisplayComponent {
   public day: Day;
+  removeMeal(meal) {
+    this.day.meals.splice(this.day.meals.indexOf(meal), 1);
+  }
 }

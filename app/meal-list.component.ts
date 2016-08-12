@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { MealDisplayComponent } from './meal-display.component';
 import { NameSearchPipe } from './name-search.pipe';
 import { ValueSearchPipe } from './value-search.pipe';
@@ -7,6 +7,7 @@ import { Meal } from './meal.model';
 @Component({
   selector: 'meal-list',
   inputs: ['meals'],
+  outputs: ['onMealSelect'],
   directives: [MealDisplayComponent],
   pipes: [NameSearchPipe, ValueSearchPipe],
   template: `
@@ -29,17 +30,22 @@ import { Meal } from './meal.model';
         <button (click)="setFilterVals(newLow, newHigh)">Search</button>
       </div>
       <meal-display *ngFor="#meal of meals | nameSearch:filterName | valueSearch:filterBy:filterLow:filterHigh"
-        [meal]="meal">
+        [meal]="meal"
+        (click)="emitMeal(meal)">
       </meal-display>
     </div>
   `
 })
 export class MealListComponent {
+  public onMealSelect: EventEmitter<Meal>;
   public meals: Meal[];
   public filterBy = "None";
   public filterLow = -1;
   public filterHigh = -1;
   public filterName = "All";
+  constructor() {
+    this.onMealSelect = new EventEmitter();
+  }
   changeFilter(newFilter: string) {
     this.filterLow = -1;
     this.filterHigh = -1;
@@ -55,5 +61,8 @@ export class MealListComponent {
     this.filterHigh = parseFloat(newHigh.value===""?"2000":newHigh.value);
     newLow.value = "";
     newHigh.value = "";
+  }
+  emitMeal(meal: Meal) {
+    this.onMealSelect.emit(meal);
   }
 }

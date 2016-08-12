@@ -19,7 +19,8 @@ import { Day } from './day.model';
       <br>
       <h2>All Meals</h2>
       <meal-list
-        [meals]='meals'>
+        [meals]='meals'
+        (onMealSelect)='addMealToDay($event)'>
       </meal-list>
       <h2>Day's Meals</h2>
       <day-display
@@ -48,5 +49,8 @@ export class AppComponent {
   }
   toggleAddMeal() {
     this.addingMeal = !this.addingMeal;
+  }
+  addMealToDay(meal: Meal) {
+    this.days[this.currentDayIndex].meals.push(meal);
   }
 }
