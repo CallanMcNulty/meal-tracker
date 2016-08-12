@@ -1,13 +1,14 @@
 import { Component } from 'angular2/core';
 import { MealDisplayComponent } from './meal-display.component';
 import { NameSearchPipe } from './name-search.pipe';
+import { ValueSearchPipe } from './value-search.pipe';
 import { Meal } from './meal.model';
 
 @Component({
   selector: 'meal-list',
   inputs: ['meals'],
   directives: [MealDisplayComponent],
-  pipes: [NameSearchPipe],
+  pipes: [NameSearchPipe, ValueSearchPipe],
   template: `
     <div>
       <select (change)="changeFilter($event.target.value)">
@@ -16,13 +17,18 @@ import { Meal } from './meal.model';
         <option value="Calories">Calories</option>
         <option value="Protein">Protein</option>
         <option value="Lipids">Lipids</option>
-        <option value="Carbs">Carbohydrates</option>
+        <option value="Carbohydrates">Carbohydrates</option>
       </select>
       <div *ngIf="filterBy==='Name'">
         <input placeholder="Name" #newName>
         <button (click)="setFilterName(newName)">Search</button>
       </div>
-      <meal-display *ngFor="#meal of meals | nameSearch:filterName"
+      <div *ngIf="!(filterBy==='Name' || filterBy==='None')">
+        <input type="number" placeholder="Minimum Value" #newLow>
+        <input type="number" placeholder="Maximum Value" #newHigh>
+        <button (click)="setFilterVals(newLow, newHigh)">Search</button>
+      </div>
+      <meal-display *ngFor="#meal of meals | nameSearch:filterName | valueSearch:filterBy:filterLow:filterHigh"
         [meal]="meal">
       </meal-display>
     </div>
@@ -35,11 +41,19 @@ export class MealListComponent {
   public filterHigh = -1;
   public filterName = "All";
   changeFilter(newFilter: string) {
+    this.filterLow = -1;
+    this.filterHigh = -1;
     this.filterName = "All";
     this.filterBy = newFilter;
   }
   setFilterName(newName: HTMLInputElement) {
-    console.log(newName.value);
     this.filterName = newName.value;
+    newName.value="";
+  }
+  setFilterVals(newLow: HTMLInputElement, newHigh: HTMLInputElement) {
+    this.filterLow = parseFloat(newLow.value===""?"0":newLow.value);
+    this.filterHigh = parseFloat(newHigh.value===""?"2000":newHigh.value);
+    newLow.value = "";
+    newHigh.value = "";
   }
 }
