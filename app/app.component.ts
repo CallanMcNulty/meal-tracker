@@ -1,16 +1,20 @@
 import { Component } from 'angular2/core';
 import { NewMealComponent } from './new-meal.component';
+import { MealListComponent } from './meal-list.component';
 import { Meal } from './meal.model';
 
 @Component({
   selector: 'app',
-  directives: [NewMealComponent],
+  directives: [NewMealComponent, MealListComponent],
   template: `
     <div class = "container">
       <h1>Meal Tracker</h1>
       <new-meal
         (onNewMealSubmit)="addMeal($event)">
       </new-meal>
+      <meal-list
+        [meals]='meals'>
+      </meal-list>
     </div>
     `
 })

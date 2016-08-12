@@ -24,5 +24,11 @@ export class NewMealComponent {
   }
   createNewMeal(name: HTMLInputElement, details: HTMLInputElement, cal: HTMLInputElement, protein: HTMLInputElement, lipids: HTMLInputElement, carbs: HTMLInputElement, ) {
     this.onNewMealSubmit.emit(new Meal(name.value, details.value, parseFloat(cal.value), parseFloat(protein.value), parseFloat(lipids.value), parseFloat(carbs.value)));
+    name.value = "";
+    details.value = "";
+    cal.value = "";
+    protein.value = "";
+    lipids.value = "";
+    carbs.value = "";
   }
 }
