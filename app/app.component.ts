@@ -22,7 +22,9 @@ import { Day } from './day.model';
         [meals]='meals'
         (onMealSelect)='addMealToDay($event)'>
       </meal-list>
+      <button (click)="cycleDay(false)"><</button>
       <h2>Day's Meals</h2>
+      <button (click)="cycleDay(true)">></button>
       <day-display
         [day]="days[currentDayIndex]">
       </day-display>
@@ -41,6 +43,8 @@ export class AppComponent {
       new Meal("Oatmeal", "1 cup, cooked", 158, 6, 3.2, 27)
     ];
     this.days = [
+      new Day(),
+      new Day(),
       new Day()
     ];
   }
@@ -52,5 +56,13 @@ export class AppComponent {
   }
   addMealToDay(meal: Meal) {
     this.days[this.currentDayIndex].meals.push(meal);
+  }
+  cycleDay(forward: boolean) {
+    if(forward && this.currentDayIndex+1 < this.days.length) {
+      this.currentDayIndex ++;
+    }
+    if(!forward && this.currentDayIndex-1 > -1) {
+      this.currentDayIndex --;
+    }
   }
 }

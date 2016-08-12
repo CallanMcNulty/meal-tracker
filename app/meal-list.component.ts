@@ -31,7 +31,7 @@ import { Meal } from './meal.model';
       </div>
       <meal-display *ngFor="#meal of meals | nameSearch:filterName | valueSearch:filterBy:filterLow:filterHigh"
         [meal]="meal"
-        (click)="emitMeal(meal)">
+        (onAddRemove)="emitMeal($event)">
       </meal-display>
     </div>
   `
