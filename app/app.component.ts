@@ -23,12 +23,12 @@ import { Day } from './day.model';
             [meals]='meals'
             (onMealSelect)='addMealToDay($event)'>
           </meal-list>
-          <button class="btn btn-primary center-block"(click)="toggleAddMeal()">{{addingMeal?"Done":"Add Meal"}}</button>
+          <button class="btn btn-primary center-block" (click)="toggleAddMeal()">{{addingMeal?"Done":"Add Meal"}}</button>
           <new-meal *ngIf="addingMeal"
           (onNewMealSubmit)="addMeal($event)">
           </new-meal>
         </div>
-        <div class="col-sm-6 main-col">
+        <div class="col-sm-6 main-col day-col">
           <div class="day-control text-center">
             <button class="btn btn-xs" (click)="cycleDay(false)"><</button>
             <h2>Day's Meals</h2>
@@ -37,6 +37,16 @@ import { Day } from './day.model';
           <day-display
             [day]="days[currentDayIndex]">
           </day-display>
+          <button class="btn btn-primary center-block" (click)="addDay()">Add Day</button>
+          <br>
+          <div class="text-center">Calories: {{days[currentDayIndex].totalCalories()}}</div>
+          <progress class="progress progress-success" value="{{days[currentDayIndex].totalCalories()}}" max="2000"></progress>
+          <div class="text-center">Protein: {{days[currentDayIndex].totalProtein()}}</div>
+          <progress class="progress progress-success" value="{{days[currentDayIndex].totalProtein()}}" max="50"></progress>
+          <div class="text-center">Lipids: {{days[currentDayIndex].totalLipids()}}</div>
+          <progress class="progress progress-success" value="{{days[currentDayIndex].totalLipids()}}" max="70"></progress>
+          <div class="text-center">Carbohydrates: {{days[currentDayIndex].totalCarbs()}}</div>
+          <progress class="progress progress-success" value="{{days[currentDayIndex].totalCarbs()}}" max="310"></progress>
         </div>
       </div>
     </div>
@@ -58,8 +68,9 @@ export class AppComponent {
       new Day(),
       new Day()
     ];
-    this.days[1].date = new Date(2016,8,13);
-    this.days[2].date = new Date(2016,8,14);
+    this.days[0].date = new Date(2016,8,9);
+    this.days[1].date = new Date(2016,8,10);
+    this.days[2].date = new Date(2016,8,11);
   }
   addMeal(meal) {
     this.meals.push(meal);
@@ -77,5 +88,14 @@ export class AppComponent {
     if(!forward && this.currentDayIndex-1 > -1) {
       this.currentDayIndex --;
     }
+  }
+  addDay() {
+    var newDate = new Date(Date.now()).toDateString();
+    for(var d of this.days) {
+      if(d.date.toDateString()===newDate) {
+        return;
+      }
+    }
+    this.days.push(new Day());
   }
 }

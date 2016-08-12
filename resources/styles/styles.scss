@@ -12,7 +12,13 @@ new-meal button {
   padding: 10px;
   height: 70%;
 }
+.day-col {
+  height: 60%;
+}
 meal-list .list {
-  max-height: 80%;
+  height: 80%;
   overflow-y: scroll;
+}
+.progress {
+  width: 100%;
 }
