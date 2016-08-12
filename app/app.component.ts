@@ -1,35 +1,52 @@
 import { Component } from 'angular2/core';
 import { NewMealComponent } from './new-meal.component';
 import { MealListComponent } from './meal-list.component';
+import { DayDisplayComponent } from './day-display.component';
 import { Meal } from './meal.model';
+import { Day } from './day.model';
 
 @Component({
   selector: 'app',
-  directives: [NewMealComponent, MealListComponent],
+  directives: [NewMealComponent, MealListComponent, DayDisplayComponent],
   template: `
     <div class = "container">
       <h1>Meal Tracker</h1>
-      <new-meal
+      <button (click)="toggleAddMeal()">{{addingMeal?"Done":"Add Meal"}}</button>
+      <new-meal *ngIf="addingMeal"
         (onNewMealSubmit)="addMeal($event)">
       </new-meal>
+      <br>
+      <br>
+      <h2>All Meals</h2>
       <meal-list
         [meals]='meals'>
       </meal-list>
+      <h2>Day's Meals</h2>
+      <day-display
+        [day]="days[currentDayIndex]">
+      </day-display>
     </div>
     `
 })
 export class AppComponent {
   public meals: Meal[];
+  public addingMeal = false;
+  public days: Day[];
+  public currentDayIndex = 0;
   constructor() {
     this.meals = [
       new Meal("Egg", "1, boiled", 78, 6, 5, 0.6),
       new Meal("Banana", "1, medium sized", 105, 1.3, .4, 27),
       new Meal("Oatmeal", "1 cup, cooked", 158, 6, 3.2, 27)
     ];
-    console.log(this.meals);
+    this.days = [
+      new Day()
+    ];
   }
   addMeal(meal) {
     this.meals.push(meal);
-    console.log(this.meals);
+  }
+  toggleAddMeal() {
+    this.addingMeal = !this.addingMeal;
   }
 }

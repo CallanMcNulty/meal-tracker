@@ -10,9 +10,6 @@ export class ValueSearchPipe {
     var searchBy = args[0];
     var min = args[1];
     var max = args[2];
-    console.log(searchBy);
-    console.log(min);
-    console.log(max);
     if(searchBy==="Name" || searchBy==="None" || (min===-1 && max===-1)) {
       return input;
     }
