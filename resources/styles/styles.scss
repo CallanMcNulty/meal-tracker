@@ -1,0 +1,18 @@
+h2 {
+  display: inline;
+}
+.day-control button {
+  display: inline;
+}
+new-meal button {
+  margin-top: 10px;
+  width: 200px;
+}
+.main-col {
+  padding: 10px;
+  height: 70%;
+}
+meal-list .list {
+  max-height: 80%;
+  overflow-y: scroll;
+}

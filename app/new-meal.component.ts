@@ -6,14 +6,17 @@ import { Meal } from './meal.model';
   outputs: ['onNewMealSubmit'],
   template: `
     <h4>Add New Meal</h4>
-    <div>
-      <input type="text" placeholder="Meal Name" #name>
-      <input type="text" placeholder="Details" #details>
-      <input type="number" placeholder="Calories" #cal>
-      <input type="number" placeholder="Protein (g)" #protein>
-      <input type="number" placeholder="Lipids (g)" #lipids>
-      <input type="number" placeholder="Carbohydrates (g)" #carbs>
-      <button (click)="createNewMeal(name, details, cal, protein, lipids, carbs)">Add</button>
+    <div class="form-inline">
+      <input class="form-control" type="text" placeholder="Meal Name" #name>
+      <input class="form-control" type="text" placeholder="Details" #details>
+      <br>
+      <input class="form-control" type="number" placeholder="Calories" #cal>
+      <input class="form-control" type="number" placeholder="Protein (g)" #protein>
+      <br>
+      <input class="form-control" type="number" placeholder="Lipids (g)" #lipids>
+      <input class="form-control" type="number" placeholder="Carbohydrates (g)" #carbs>
+      <br>
+      <button class="btn btn-success center-block" (click)="createNewMeal(name, details, cal, protein, lipids, carbs)">Add</button>
     </div>
   `
 })

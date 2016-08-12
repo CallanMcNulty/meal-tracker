@@ -9,25 +9,36 @@ import { Day } from './day.model';
   selector: 'app',
   directives: [NewMealComponent, MealListComponent, DayDisplayComponent],
   template: `
-    <div class = "container">
+    <div class="container">
       <h1>Meal Tracker</h1>
-      <button (click)="toggleAddMeal()">{{addingMeal?"Done":"Add Meal"}}</button>
-      <new-meal *ngIf="addingMeal"
-        (onNewMealSubmit)="addMeal($event)">
-      </new-meal>
       <br>
-      <br>
-      <h2>All Meals</h2>
-      <meal-list
-        [meals]='meals'
-        (onMealSelect)='addMealToDay($event)'>
-      </meal-list>
-      <button (click)="cycleDay(false)"><</button>
-      <h2>Day's Meals</h2>
-      <button (click)="cycleDay(true)">></button>
-      <day-display
-        [day]="days[currentDayIndex]">
-      </day-display>
+      <div class="row">
+        <div class="col-sm-6 main-col">
+          <div class="text-center">
+            <h2>All Meals</h2>
+          </div>
+          <br>
+          <br>
+          <meal-list
+            [meals]='meals'
+            (onMealSelect)='addMealToDay($event)'>
+          </meal-list>
+          <button class="btn btn-primary center-block"(click)="toggleAddMeal()">{{addingMeal?"Done":"Add Meal"}}</button>
+          <new-meal *ngIf="addingMeal"
+          (onNewMealSubmit)="addMeal($event)">
+          </new-meal>
+        </div>
+        <div class="col-sm-6 main-col">
+          <div class="day-control text-center">
+            <button class="btn btn-xs" (click)="cycleDay(false)"><</button>
+            <h2>Day's Meals</h2>
+            <button class="btn btn-xs" (click)="cycleDay(true)">></button>
+          </div>
+          <day-display
+            [day]="days[currentDayIndex]">
+          </day-display>
+        </div>
+      </div>
     </div>
     `
 })
@@ -47,6 +58,8 @@ export class AppComponent {
       new Day(),
       new Day()
     ];
+    this.days[1].date = new Date(2016,8,13);
+    this.days[2].date = new Date(2016,8,14);
   }
   addMeal(meal) {
     this.meals.push(meal);

@@ -15,8 +15,9 @@ import { Meal } from './meal.model';
         <strong> | Lipids: </strong>{{meal.lipids}}
         <strong> | Carbohydrates: </strong>{{meal.carbs}}</p>
       <edit-meal *ngIf="beingEdited" [meal]="meal"></edit-meal>
-      <button (click)="edit()">{{beingEdited?"Done":"Edit"}}</button>
-      <button (click)="addRemove()">Add/Remove</button>
+      <button class="btn" (click)="edit()">{{beingEdited?"Done":"Edit"}}</button>
+      <button class="btn btn-success" (click)="addRemove()">Add/Remove</button>
+      <hr>
     `
 })
 export class MealDisplayComponent {

@@ -9,7 +9,7 @@ import { Day } from './day.model';
   directives: [MealListComponent],
   template: `
     <div>
-      <h4>{{day.date.toDateString()}}</h4>
+      <h4 class="text-center">{{day.date.toDateString()}}</h4>
       <meal-list
         [meals]='day.meals'
         (onMealSelect)='removeMeal($event)'>
